@@ -25,7 +25,6 @@ owner_id = bot.owner_id
 def check_access(UserId:int):
     accesslevel = Authorizations.get(UserId)
      
-    print(accesslevel)
     if accesslevel != None:
         return accesslevel
     else:
@@ -41,7 +40,7 @@ async def on_ready():
 
 @bot.command()
 async def set_status(ctx:commands.Context, message):
-    if check_access(ctx.author.id) > 1 :
+    if check_access(ctx.author.id) < 2 :
         await ctx.send(content="**[ACCES DENIED]:** Your access is not high enough.",delete_after=30.0)
         return
     await ctx.send(content="**[ACCES GRANTED]:** Changing status.",delete_after=30.0)
