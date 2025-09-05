@@ -24,7 +24,8 @@ owner_id = bot.owner_id
 
 def check_access(UserId:int):
     accesslevel = Authorizations.get(UserId)
-
+     
+    print(accesslevel)
     if accesslevel != None:
         return accesslevel
     else:
