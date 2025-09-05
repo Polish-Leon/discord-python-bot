@@ -21,7 +21,7 @@ bot = commands.Bot(command_prefix='s?', description=description, intents=intents
 
 Authorizations = {bot.owner_id:3}
 owner_id = bot.owner_id
-
+print(owner_id)
 def check_access(UserId:int):
     accesslevel = Authorizations.get(UserId)
      
