@@ -40,6 +40,9 @@ async def on_ready():
     print(f'Logged in as {bot.user} (ID: {bot.user.id})')
     print('------')
     await bot.change_presence(activity=discord.CustomActivity("Site systems online."),status=discord.Status.online)
+    bot.add_command(intercom)
+    bot.add_command(set_status)
+
 
 @bot.command()
 async def set_status(ctx:commands.Context, *message):
