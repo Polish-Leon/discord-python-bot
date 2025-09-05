@@ -43,7 +43,10 @@ async def set_status(ctx:commands.Context, *message):
         await ctx.send(content="**[ACCES DENIED]:** Your access is not high enough.",delete_after=30.0)
         return
     await ctx.send(content="**[ACCES GRANTED]:** Changing status.",delete_after=30.0)
-    print(message)
+    text = ""
+    for s in message:
+        text = text + s + " "
+    print(text)
 
 @bot.command()
 async def get_categories(ctx:commands.Context):
