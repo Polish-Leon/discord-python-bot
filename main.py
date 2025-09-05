@@ -19,7 +19,7 @@ bot = commands.Bot(command_prefix='s?', description=description, intents=intents
 # level 1 - Mod
 # level 0 - Guest
 
-Authorizations = {bot.owner_id:3}
+Authorizations = {482547124761002006:3}
 owner_id = bot.owner_id
 print(owner_id)
 def check_access(UserId:int):
