@@ -13,7 +13,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 bot = commands.Bot(command_prefix='s?', description=description, intents=intents)
 
-
+IntercomChnnel = 1413606516828803084
 
 # level 3 - Owner
 # level 2 - Manager
@@ -51,12 +51,13 @@ async def set_status(ctx:commands.Context, *message):
     await bot.change_presence(activity=discord.CustomActivity(text),status=discord.Status.online)
 
 @bot.command()
-async def intercom(ctx:commands.Context,channel:discord.channel.TextChannel,*message):
+async def intercom(ctx:commands.Context,*message):
     if not await check_access(ctx,2): return
     await ctx.send(content="**[ACCESS GRANTED]:** Begining transmission.",delete_after=30.0)
     text = ""
     for s in message:
         text = text + s + " "
+    channel = ctx.guild.get_channel(IntercomChnnel)
     await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``{datetime.datetime.now().day}.{datetime.datetime.now().month}.2011``**\n-# Beginning transmission.\n\n_{text}_\n\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {ctx.author.mention}")
 @bot.command()
 async def get_categories(ctx:commands.Context):
@@ -93,6 +94,7 @@ async def test(ctx:commands.Context):
 @bot.command()
 async def stop_living(ctx):
     ctx.send("Going off to retire (call me when needed)!")
+    
     await bot.close()
 
 @bot.command()
