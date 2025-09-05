@@ -30,8 +30,8 @@ async def check_access(ctx:commands.Context,NeededAccess:int):
             return True
     elif NeededAccess == 0:
         return True
-    
     await ctx.send(content="**[ACCESS DENIED]:** Your access is not high enough.",delete_after=30.0)
+    return False
 
 @bot.event
 async def on_ready():
@@ -57,7 +57,7 @@ async def intercom(ctx:commands.Context,channel:discord.channel.TextChannel,*mes
     text = ""
     for s in message:
         text = text + s + " "
-    await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``{datetime.datetime.now().day}.{datetime.datetime.now().month}.2011``**\n-# Beginning transmission.\n_{text}_\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {ctx.author.mention}")
+    await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``{datetime.datetime.now().day}.{datetime.datetime.now().month}.2011``**\n-# Beginning transmission.\n\n_{text}_\n\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {ctx.author.mention}")
 @bot.command()
 async def get_categories(ctx:commands.Context):
     i = 0
