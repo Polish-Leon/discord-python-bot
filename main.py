@@ -43,8 +43,7 @@ async def on_ready():
 
 @bot.command()
 async def set_status(ctx:commands.Context, *message):
-    if not await check_access(ctx,2): 
-        return
+    if not await check_access(ctx,2): return
     await ctx.send(content="**[ACCESS GRANTED]:** Changing status.",delete_after=30.0)
     text = ""
     for s in message:
@@ -53,7 +52,7 @@ async def set_status(ctx:commands.Context, *message):
 
 @bot.command()
 async def intercom(ctx:commands.Context,channel:discord.channel.TextChannel,*message):
-    if not check_access(ctx,2): return
+    if not await check_access(ctx,2): return
     await ctx.send(content="**[ACCESS GRANTED]:** Begining transmission.",delete_after=30.0)
     text = ""
     for s in message:
