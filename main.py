@@ -24,7 +24,6 @@ Authorizations = {482547124761002006:3}
 def check_access(UserId:int):
     accesslevel = Authorizations.get(UserId)
      
-    print(accesslevel)
     if accesslevel != None:
         return accesslevel
     else:
@@ -39,7 +38,7 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game("Site systems online."),status=discord.Status.online)
 
 @bot.command()
-async def set_status(ctx:commands.Context, **message):
+async def set_status(ctx:commands.Context, *message):
     if check_access(ctx.author.id) < 2 :
         await ctx.send(content="**[ACCES DENIED]:** Your access is not high enough.",delete_after=30.0)
         return
