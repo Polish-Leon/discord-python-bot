@@ -41,9 +41,9 @@ async def on_ready():
 @bot.command()
 async def set_status(ctx:commands.Context, message):
     if check_access(ctx.author.id) > 1 :
-        ctx.send(content="**[ACCES DENIED]:** Your access is not high enough.",delete_after=30.0)
+        await ctx.send(content="**[ACCES DENIED]:** Your access is not high enough.",delete_after=30.0)
         return
-    ctx.send(content="**[ACCES GRANTED]:** Changing status.",delete_after=30.0)
+    await ctx.send(content="**[ACCES GRANTED]:** Changing status.",delete_after=30.0)
     print(message)
 
 @bot.command()
