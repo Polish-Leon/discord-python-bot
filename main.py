@@ -43,7 +43,8 @@ async def on_ready():
 
 @bot.command()
 async def set_status(ctx:commands.Context, *message):
-    if not check_access(ctx,2): return
+    if not check_access(ctx,2): 
+        return
     await ctx.send(content="**[ACCESS GRANTED]:** Changing status.",delete_after=30.0)
     text = ""
     for s in message:
