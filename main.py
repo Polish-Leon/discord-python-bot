@@ -21,13 +21,16 @@ bot = commands.Bot(command_prefix='s?', description=description, intents=intents
 
 Authorizations = {482547124761002006:3}
 
-def check_access(UserId:int):
-    accesslevel = Authorizations.get(UserId)
+async def check_access(ctx:commands.Context,NeededAccess:int):
+    accesslevel = Authorizations.get(ctx.author.id)
      
     if accesslevel != None:
-        return accesslevel
-    else:
-        return 0
+        if accesslevel >= NeededAccess:
+            return True
+    elif NeededAccess == 0:
+        return True
+    
+    await ctx.send(content="**[ACCESS DENIED]:** Your access is not high enough.",delete_after=30.0)
 
 @bot.event
 async def on_ready():
@@ -39,10 +42,8 @@ async def on_ready():
 
 @bot.command()
 async def set_status(ctx:commands.Context, *message):
-    if check_access(ctx.author.id) < 2 :
-        await ctx.send(content="**[ACCES DENIED]:** Your access is not high enough.",delete_after=30.0)
-        return
-    await ctx.send(content="**[ACCES GRANTED]:** Changing status.",delete_after=30.0)
+    if not check_access(ctx,2): return
+    await ctx.send(content="**[ACCESS GRANTED]:** Changing status.",delete_after=30.0)
     text = ""
     for s in message:
         text = text + s + " "
