@@ -12,6 +12,10 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 bot = commands.Bot(command_prefix='s?', description=description, intents=intents)
 
+if type(bot) != type(commands.bot):
+    print("Failed to fetch a bot!")
+    exit
+
 # level 3 - Owner
 # level 2 - Manager
 # level 1 - Mod
