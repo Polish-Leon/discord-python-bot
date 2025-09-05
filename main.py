@@ -49,7 +49,14 @@ async def set_status(ctx:commands.Context, *message):
         text = text + s + " "
     await bot.change_presence(activity=discord.CustomActivity(text),status=discord.Status.online)
 
-
+@bot.command()
+async def intercom(ctx:commands.Context,channel:discord.channel.TextChannel,*message):
+    if not check_access(ctx,2): return
+    await ctx.send(content="**[ACCESS GRANTED]:** Begining transmission.",delete_after=30.0)
+    text = ""
+    for s in message:
+        text = text + s + " "
+    await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``DD.MM.2011``**\n-# Beginning transmission.\n _{text}_\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {ctx.author.mention}")
 @bot.command()
 async def get_categories(ctx:commands.Context):
     i = 0
