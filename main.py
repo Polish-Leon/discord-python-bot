@@ -46,7 +46,8 @@ async def set_status(ctx:commands.Context, *message):
     text = ""
     for s in message:
         text = text + s + " "
-    print(text)
+    await bot.change_presence(activity=discord.CustomActivity(text),status=discord.Status.online)
+
 
 @bot.command()
 async def get_categories(ctx:commands.Context):
