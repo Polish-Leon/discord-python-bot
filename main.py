@@ -56,7 +56,7 @@ async def intercom(ctx:commands.Context,channel:discord.channel.TextChannel,*mes
     text = ""
     for s in message:
         text = text + s + " "
-    await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``DD.MM.2011``**\n-# Beginning transmission.\n _{text}_\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {ctx.author.mention}")
+    await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``DD.MM.2011``**\n-# Beginning transmission.\n_{text}_\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {ctx.author.mention}")
 @bot.command()
 async def get_categories(ctx:commands.Context):
     i = 0
