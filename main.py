@@ -35,7 +35,7 @@ async def on_ready():
     assert bot.user is not None
     print(f'Logged in as {bot.user} (ID: {bot.user.id})')
     print('------')
-    await bot.change_presence(activity=discord.Game("Site systems online."),status=discord.Status.online)
+    await bot.change_presence(activity=discord.CustomActivity("Site systems online."),status=discord.Status.online)
 
 @bot.command()
 async def set_status(ctx:commands.Context, *message):
