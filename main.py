@@ -28,6 +28,10 @@ class intercom_modal(ui.Modal, title='Intercom Broadcast'):
         channel = interaction.guild.get_channel(IntercomChnnel)
         await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``{datetime.datetime.now().day}.{datetime.datetime.now().month}.2011``**\n-# Beginning transmission.\n\n_{self.broadcast}_\n\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {interaction.user.mention}")
 
+    async def on_error(self, interaction: discord.Interaction):
+        interaction.response.send_message(content="Broadcast failed.",ephemeral=True)
+
+
 
 # level 3 - Owner
 # level 2 - Manager
