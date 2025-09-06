@@ -93,7 +93,7 @@ async def authorization(interaction:discord.Interaction, member:discord.User,lev
 @bot.tree.command(name="set_status",description="Change the status of the site.")
 @app_commands.describe(status="Write the status that should be given to the bot.")
 async def set_status(interaction:discord.Interaction, status:str):
-    if not await check_access(interaction.user.id,2):
+    if not check_access(interaction.user.id,2):
         await interaction.response.send_message(content=T_ACCES_DENIED,ephemeral=True)
         return
     await interaction.response.send_message(content="**[ACCESS GRANTED]:** Changing status.",ephemeral=True)
@@ -101,7 +101,7 @@ async def set_status(interaction:discord.Interaction, status:str):
 
 @bot.tree.command(name="intercom",description="Broadcast a message over the intercom.")
 async def intercom(interaction:discord.Interaction):
-    if not await check_access(interaction.user.id,2):
+    if not check_access(interaction.user.id,2):
         await interaction.response.send_message(content=T_ACCES_DENIED,ephemeral=True)
         return
     
