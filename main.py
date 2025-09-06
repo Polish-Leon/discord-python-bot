@@ -68,7 +68,7 @@ async def on_ready():
 
 @bot.tree.command()
 @app_commands.describe(status="Write the status that should be given to the bot.")
-async def set_status(interaction:discord.Interaction, *status:str):
+async def set_status(interaction:discord.Interaction, status:str):
     await interaction.response.send_message(content="**[ACCESS GRANTED]:** Changing status.",delete_after=30.0)
     text = ""
     for s in status:
