@@ -69,7 +69,7 @@ async def on_ready():
 @bot.tree.command(name="set_status",description="Change the status of the site.")
 @app_commands.describe(status="Write the status that should be given to the bot.")
 async def set_status(interaction:discord.Interaction, status:str):
-    await interaction.response.send_message(content="**[ACCESS GRANTED]:** Changing status.",delete_after=30.0)
+    await interaction.response.send_message(content="**[ACCESS GRANTED]:** Changing status.",ephemeral=True)
     '''text = ""
     for s in status:
         text = text + s + " "'''
