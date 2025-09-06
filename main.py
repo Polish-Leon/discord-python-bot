@@ -62,7 +62,7 @@ async def on_ready():
 
     try:
         sync = await bot.tree.sync()
-        print(f"Syncing up {sync.len()} commands.")
+        print(f"Syncing up {sync.lenght()} commands.")
     except Exception as e:
         print(e)
     
