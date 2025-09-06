@@ -31,7 +31,6 @@ class intercom_modal(ui.Modal, title='Intercom Broadcast'):
 
 
 
-
 # level 3 - Owner
 # level 2 - Manager
 # level 1 - Mod
