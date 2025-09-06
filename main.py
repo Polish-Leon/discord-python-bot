@@ -1,9 +1,11 @@
 import discord
 import os
 import datetime
+import mysql.connector
 from discord.ext import commands
 from discord import app_commands
 from discord import ui
+
 
 T_ACCES_DENIED = "**[ACCESS DENIED]:** Your access is not high enough."
 IntercomChnnel = 1413606516828803084
@@ -33,14 +35,20 @@ class intercom_modal(ui.Modal, title='Intercom Broadcast'):
 
 
 
-# level 3 - Owner
-# level 2 - Manager
-# level 1 - Mod
+# level 9 - Owner
+# level 8 - RolePlay Manager
+# level 7 - RolePlay cordinator
+# level 6 - Director
+# level 5 - Site Menagment
+# level 4 - Site Division Manager
+# level 3 - Site Senior employee
+# level 2 - Site employee
+# level 1 - Site junior employee
 # level 0 - Guest
 
-Authorizations = {482547124761002006:3}
+Authorizations = {482547124761002006:9,756962442180821143:8}
 
-async def check_access(UserID:int,NeededAccess:int):
+def check_access(UserID:int,NeededAccess:int):
     accesslevel = Authorizations.get(UserID)
      
     if accesslevel != None:
@@ -49,8 +57,6 @@ async def check_access(UserID:int,NeededAccess:int):
     elif NeededAccess == 0:
         return True
     return False
-
-
 
 
 @bot.event
@@ -66,7 +72,24 @@ async def on_ready():
         print(f"Syncing up {len(sync)} commands.")
     except Exception as e:
         print(e)
+
+#def C_authorize(UserID:int,level:int):
     
+    
+
+@bot.tree.command(name="authorize",description="Authorize someone.")
+@app_commands.describe(member="Select a member's authorization.")
+async def authorization(interaction:discord.Interaction, member:discord.User,level:int):
+    if not await check_access(interaction.user.id,2):
+        await interaction.response.send_message(content=T_ACCES_DENIED,ephemeral=True)
+        return
+    if level > 7 or level < 0:
+        interaction.response.send_message(content="Wrong access level.")
+        return
+    await interaction.response.send_message(content="**[ACCESS GRANTED]:** Changing authorization.",ephemeral=True)
+
+   # C_authorize(member.id,level)
+
 @bot.tree.command(name="set_status",description="Change the status of the site.")
 @app_commands.describe(status="Write the status that should be given to the bot.")
 async def set_status(interaction:discord.Interaction, status:str):
