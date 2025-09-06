@@ -44,7 +44,7 @@ async def on_ready():
 
     current_guild = bot.get_guild(1407418719315038348)
     integrations = await current_guild.integrations()
-    print(discord.BotIntegration.type)
+    print(discord.BotIntegration.type())
     for integration in integrations:
         print(type(integration))
 
