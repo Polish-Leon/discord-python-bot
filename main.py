@@ -21,7 +21,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 bot = commands.Bot(command_prefix='s?', description=description, intents=intents)
 
 class intercom_modal(ui.Modal, title='Intercom Broadcast'):
-    broadcast = ui.TextInput(label='Broadcast', component=ui.TextInput(style=discord.TextStyle.paragraph))
+    broadcast = ui.TextInput(label='Broadcast',required=True)
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message(content="**[ACCESS GRANTED]:** Begining transmission.", ephemeral=True)
