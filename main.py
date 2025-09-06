@@ -70,10 +70,10 @@ async def on_ready():
 @app_commands.describe(status="Write the status that should be given to the bot.")
 async def set_status(interaction:discord.Interaction, status:str):
     await interaction.response.send_message(content="**[ACCESS GRANTED]:** Changing status.",delete_after=30.0)
-    text = ""
+    '''text = ""
     for s in status:
-        text = text + s + " "
-    await bot.change_presence(activity=discord.CustomActivity(text),status=discord.Status.online)
+        text = text + s + " "'''
+    await bot.change_presence(activity=discord.CustomActivity(status),status=discord.Status.online)
 
 @bot.command()
 async def intercom(ctx:commands.Context,*message):
