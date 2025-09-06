@@ -55,11 +55,15 @@ async def on_ready():
     if BotIntegration == None:
         print("INTEGRATION NOT FOUND IN THE SERVER!!!!")
         await bot.close()'''
-    await bot.tree.sync()
+    try:
+        sync = await bot.tree.sync()
+        print(sync)
+    except Exception as e:
+        print(e)
     
 
 
-@bot.hybrid_command(name="set_status")
+@bot.tree.command(name="set_status",description="Set the status of the site, requires level 2 auth.")
 async def set_status(ctx:commands.Context, *message):
     if not await check_access(ctx,2): return
     await ctx.send(content="**[ACCESS GRANTED]:** Changing status.",delete_after=30.0)
@@ -68,7 +72,7 @@ async def set_status(ctx:commands.Context, *message):
         text = text + s + " "
     await bot.change_presence(activity=discord.CustomActivity(text),status=discord.Status.online)
 
-@bot.hybrid_command(name="intercom")
+@bot.tree.command(name="intercom",description="Broadcast a message on the intercom, requires level 2 auth.")
 async def intercom(ctx:commands.Context,*message):
     if not await check_access(ctx,2): return
     await ctx.send(content="**[ACCESS GRANTED]:** Begining transmission.",delete_after=30.0)
