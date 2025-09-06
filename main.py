@@ -59,7 +59,7 @@ async def on_ready():
 
     try:
         sync = await bot.tree.sync()
-        print(f"Syncing up {sync.__len__} commands.")
+        print(f"Syncing up {sync.len()} commands.")
     except Exception as e:
         print(e)
     
@@ -78,8 +78,8 @@ async def intercom(interaction:discord.Interaction,message:str):
     if not await check_access(interaction.user.id,2):
         await interaction.response.send_message(content=T_ACCES_DENIED,ephemeral=True)
         return
-    await interaction.response.send_message(content="**[ACCESS GRANTED]:** Begining transmission.",ephemeral=True)
-
+    #await interaction.response.send_message(content="**[ACCESS GRANTED]:** Begining transmission.",ephemeral=True)
+    interaction.followup
     await interaction.response.send_modal(intercom_modal)
     channel = interaction.guild.get_channel(IntercomChnnel)
     await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``{datetime.datetime.now().day}.{datetime.datetime.now().month}.2011``**\n-# Beginning transmission.\n\n_{message}_\n\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {interaction.user.mention}")
