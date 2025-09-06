@@ -2,6 +2,8 @@ import discord
 import os
 import datetime
 from discord.ext import commands
+from discord import app_commands
+
 
 description = '''Discord bot for a SCP TRP (Text role-play) server.'''
 
@@ -64,12 +66,12 @@ async def on_ready():
     
 
 
-@bot.command()
-async def set_status(ctx:commands.Context, *message):
-    if not await check_access(ctx,2): return
-    await ctx.send(content="**[ACCESS GRANTED]:** Changing status.",delete_after=30.0)
+@bot.tree.command()
+@app_commands.describe(status="Write the status that should be given to the bot.")
+async def set_status(interaction:discord.Interaction, *status):
+    await interaction.response.send_message(content="**[ACCESS GRANTED]:** Changing status.",delete_after=30.0)
     text = ""
-    for s in message:
+    for s in status:
         text = text + s + " "
     await bot.change_presence(activity=discord.CustomActivity(text),status=discord.Status.online)
 
