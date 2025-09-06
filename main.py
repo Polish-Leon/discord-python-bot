@@ -43,7 +43,7 @@ async def on_ready():
     await bot.change_presence(activity=discord.CustomActivity("Site systems online."),status=discord.Status.online)
 
     current_guild = bot.get_guild(1407418719315038348)
-    integrations = current_guild.integrations()
+    integrations = await current_guild.integrations()
     print(integrations)
 
 
