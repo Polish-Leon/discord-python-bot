@@ -25,7 +25,10 @@ class intercom_modal(ui.Modal, title='Intercom Broadcast'):
     answer = ui.Label(text='Answer', component=ui.TextInput(style=discord.TextStyle.paragraph))
 
     async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.send_message(f'Thanks for your response, {self.name.component.value}!', ephemeral=True)
+        await interaction.response.send_message(content="**[ACCESS GRANTED]:** Begining transmission.", ephemeral=True)
+        channel = interaction.guild.get_channel(IntercomChnnel)
+        await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``{datetime.datetime.now().day}.{datetime.datetime.now().month}.2011``**\n-# Beginning transmission.\n\n_{self.answer}_\n\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {interaction.user.mention}")
+
 
 
 
@@ -73,16 +76,13 @@ async def set_status(interaction:discord.Interaction, status:str):
     await bot.change_presence(activity=discord.CustomActivity(status),status=discord.Status.online)
 
 @bot.tree.command(name="intercom",description="Broadcast a message over the intercom.")
-@app_commands.describe(message="Write the message that should be broadcasted.")
+#@app_commands.describe(message="Write the message that should be broadcasted.")
 async def intercom(interaction:discord.Interaction,message:str):
     if not await check_access(interaction.user.id,2):
         await interaction.response.send_message(content=T_ACCES_DENIED,ephemeral=True)
         return
-    #await interaction.response.send_message(content="**[ACCESS GRANTED]:** Begining transmission.",ephemeral=True)
-    interaction.followup
+    
     await interaction.response.send_modal(intercom_modal)
-    channel = interaction.guild.get_channel(IntercomChnnel)
-    await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``{datetime.datetime.now().day}.{datetime.datetime.now().month}.2011``**\n-# Beginning transmission.\n\n_{message}_\n\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {interaction.user.mention}")
 
 @bot.command()
 async def get_categories(ctx:commands.Context):
