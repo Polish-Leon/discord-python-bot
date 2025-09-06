@@ -5,7 +5,9 @@ from discord.ext import commands
 from discord import app_commands
 
 
-description = '''Discord bot for a SCP TRP (Text role-play) server.'''
+description = "Discord bot for a SCP TRP (Text role-play) server."
+
+T_ACCES_DENIED = "**[ACCESS DENIED]:** Your access is not high enough."
 
 intents = discord.Intents.all()
 intents.members = True
@@ -29,15 +31,14 @@ IntercomChnnel = 1413606516828803084
 
 Authorizations = {482547124761002006:3}
 
-async def check_access(ctx:commands.Context,NeededAccess:int):
-    accesslevel = Authorizations.get(ctx.author.id)
+async def check_access(UserID:int,NeededAccess:int):
+    accesslevel = Authorizations.get(UserID)
      
     if accesslevel != None:
         if accesslevel >= NeededAccess:
             return True
     elif NeededAccess == 0:
         return True
-    await ctx.send(content="**[ACCESS DENIED]:** Your access is not high enough.",delete_after=30.0)
     return False
 
 @bot.event
@@ -48,42 +49,31 @@ async def on_ready():
     print('------')
     await bot.change_presence(activity=discord.CustomActivity("Site systems online."),status=discord.Status.online)
 
-    '''current_guild = bot.get_guild(1407418719315038348)
-    integrations = await current_guild.integrations()
-    
-    for integration in integrations:
-        if integration.account.id == BotID:
-            BotIntegration = integration
-    
-    if BotIntegration == None:
-        print("INTEGRATION NOT FOUND IN THE SERVER!!!!")
-        await bot.close()'''
     try:
         sync = await bot.tree.sync()
         print(sync)
     except Exception as e:
         print(e)
     
-
-
 @bot.tree.command(name="set_status",description="Change the status of the site.")
 @app_commands.describe(status="Write the status that should be given to the bot.")
 async def set_status(interaction:discord.Interaction, status:str):
+    if not await check_access(interaction.user.id,2):
+        await interaction.response.send_message(content=T_ACCES_DENIED,ephemeral=True)
+        return
     await interaction.response.send_message(content="**[ACCESS GRANTED]:** Changing status.",ephemeral=True)
-    '''text = ""
-    for s in status:
-        text = text + s + " "'''
     await bot.change_presence(activity=discord.CustomActivity(status),status=discord.Status.online)
 
-@bot.command()
-async def intercom(ctx:commands.Context,*message):
-    if not await check_access(ctx,2): return
-    await ctx.send(content="**[ACCESS GRANTED]:** Begining transmission.",delete_after=30.0)
-    text = ""
-    for s in message:
-        text = text + s + " "
-    channel = ctx.guild.get_channel(IntercomChnnel)
-    await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``{datetime.datetime.now().day}.{datetime.datetime.now().month}.2011``**\n-# Beginning transmission.\n\n_{text}_\n\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {ctx.author.mention}")
+@bot.tree.command(name="intercom",description="Broadcast a message over the intercom.")
+@app_commands.describe(message="Write the message that should be broadcasted.")
+async def intercom(interaction:discord.Interaction,message:str):
+    if not await check_access(interaction.user.id,2):
+        await interaction.response.send_message(content=T_ACCES_DENIED,ephemeral=True)
+        return
+    await interaction.response.send_message(content="**[ACCESS GRANTED]:** Begining transmission.",ephemeral=True)
+    channel = interaction.guild.get_channel(IntercomChnnel)
+    await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``{datetime.datetime.now().day}.{datetime.datetime.now().month}.2011``**\n-# Beginning transmission.\n\n_{message}_\n\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {interaction.user.mention}")
+
 @bot.command()
 async def get_categories(ctx:commands.Context):
     i = 0
