@@ -8,6 +8,7 @@ description = '''Discord bot for a SCP TRP (Text role-play) server.'''
 intents = discord.Intents.all()
 intents.members = True
 intents.message_content = True
+intents.all()
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
