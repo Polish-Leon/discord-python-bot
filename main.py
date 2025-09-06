@@ -13,6 +13,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 bot = commands.Bot(command_prefix='s?', description=description, intents=intents)
 
+
 IntercomChnnel = 1413606516828803084
 
 # level 3 - Owner
@@ -40,6 +41,10 @@ async def on_ready():
     print(f'Logged in as {bot.user} (ID: {bot.user.id})')
     print('------')
     await bot.change_presence(activity=discord.CustomActivity("Site systems online."),status=discord.Status.online)
+
+    current_guild = bot.get_guild(1407418719315038348)
+    integrations = current_guild.integrations()
+    print(integrations)
 
 
 @bot.command()
