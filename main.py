@@ -3,12 +3,14 @@ import os
 import datetime
 from discord.ext import commands
 from discord import app_commands
+from discord import ui
+
+T_ACCES_DENIED = "**[ACCESS DENIED]:** Your access is not high enough."
+IntercomChnnel = 1413606516828803084
+
 
 
 description = "Discord bot for a SCP TRP (Text role-play) server."
-
-T_ACCES_DENIED = "**[ACCESS DENIED]:** Your access is not high enough."
-
 intents = discord.Intents.all()
 intents.members = True
 intents.message_content = True
@@ -18,11 +20,14 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 bot = commands.Bot(command_prefix='s?', description=description, intents=intents)
 
-BotIntegration = None
+class intercom_modal(ui.Modal, title='Intercom Broadcast'):
+    name = ui.Label(text='Name', component=ui.TextInput())
+    answer = ui.Label(text='Answer', component=ui.TextInput(style=discord.TextStyle.paragraph))
 
-BotID = 1407806952209125407
+    async def on_submit(self, interaction: discord.Interaction):
+        await interaction.response.send_message(f'Thanks for your response, {self.name.component.value}!', ephemeral=True)
 
-IntercomChnnel = 1413606516828803084
+
 
 # level 3 - Owner
 # level 2 - Manager
@@ -41,6 +46,9 @@ async def check_access(UserID:int,NeededAccess:int):
         return True
     return False
 
+
+
+
 @bot.event
 async def on_ready():
     # Tell the type checker that User is filled up at this point
@@ -51,7 +59,7 @@ async def on_ready():
 
     try:
         sync = await bot.tree.sync()
-        print(sync)
+        print(f"Syncing up {sync.__len__} commands.")
     except Exception as e:
         print(e)
     
@@ -71,6 +79,8 @@ async def intercom(interaction:discord.Interaction,message:str):
         await interaction.response.send_message(content=T_ACCES_DENIED,ephemeral=True)
         return
     await interaction.response.send_message(content="**[ACCESS GRANTED]:** Begining transmission.",ephemeral=True)
+
+    await interaction.response.send_modal(intercom_modal)
     channel = interaction.guild.get_channel(IntercomChnnel)
     await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``{datetime.datetime.now().day}.{datetime.datetime.now().month}.2011``**\n-# Beginning transmission.\n\n_{message}_\n\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {interaction.user.mention}")
 
