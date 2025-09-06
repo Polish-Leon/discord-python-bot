@@ -29,7 +29,6 @@ class intercom_modal(ui.Modal, title='Intercom Broadcast'):
         channel = interaction.guild.get_channel(IntercomChnnel)
         await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``{datetime.datetime.now().day}.{datetime.datetime.now().month}.2011``**\n-# Beginning transmission.\n\n_{self.answer}_\n\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {interaction.user.mention}")
 
-IntercomForm = intercom_modal()
 
 # level 3 - Owner
 # level 2 - Manager
@@ -80,8 +79,8 @@ async def intercom(interaction:discord.Interaction):
         await interaction.response.send_message(content=T_ACCES_DENIED,ephemeral=True)
         return
     
-    await interaction.response.send_modal(IntercomForm)
-    
+    await interaction.response.send_modal(intercom_modal())
+
 @bot.command()
 async def get_categories(ctx:commands.Context):
     i = 0
