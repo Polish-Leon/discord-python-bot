@@ -21,13 +21,12 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 bot = commands.Bot(command_prefix='s?', description=description, intents=intents)
 
 class intercom_modal(ui.Modal, title='Intercom Broadcast'):
-    name = ui.Label(text='Name', component=ui.TextInput())
-    answer = ui.Label(text='Answer', component=ui.TextInput(style=discord.TextStyle.paragraph))
+    broadcast = ui.TextInput(label='Broadcast', component=ui.TextInput(style=discord.TextStyle.paragraph))
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message(content="**[ACCESS GRANTED]:** Begining transmission.", ephemeral=True)
         channel = interaction.guild.get_channel(IntercomChnnel)
-        await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``{datetime.datetime.now().day}.{datetime.datetime.now().month}.2011``**\n-# Beginning transmission.\n\n_{self.answer}_\n\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {interaction.user.mention}")
+        await channel.send(content=f"# ``INTERCOM ANNOUNCEMENT``\n**Current date: ``{datetime.datetime.now().day}.{datetime.datetime.now().month}.2011``**\n-# Beginning transmission.\n\n_{self.broadcast}_\n\n-# End of transmission.\n### Secure Contain Protect | Message transmitted by {interaction.user.mention}")
 
 
 # level 3 - Owner
