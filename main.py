@@ -13,6 +13,9 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 bot = commands.Bot(command_prefix='s?', description=description, intents=intents)
 
+BotIntegration = None
+
+BotID = 1407806952209125407
 
 IntercomChnnel = 1413606516828803084
 
@@ -42,14 +45,21 @@ async def on_ready():
     print('------')
     await bot.change_presence(activity=discord.CustomActivity("Site systems online."),status=discord.Status.online)
 
-    current_guild = bot.get_guild(1407418719315038348)
+    '''current_guild = bot.get_guild(1407418719315038348)
     integrations = await current_guild.integrations()
     
     for integration in integrations:
-        print(integration.name + ", " + integration.account.id)
+        if integration.account.id == BotID:
+            BotIntegration = integration
+    
+    if BotIntegration == None:
+        print("INTEGRATION NOT FOUND IN THE SERVER!!!!")
+        await bot.close()'''
+    await bot.tree.sync()
+    
 
 
-@bot.command()
+@bot.hybrid_command()
 async def set_status(ctx:commands.Context, *message):
     if not await check_access(ctx,2): return
     await ctx.send(content="**[ACCESS GRANTED]:** Changing status.",delete_after=30.0)
@@ -58,7 +68,7 @@ async def set_status(ctx:commands.Context, *message):
         text = text + s + " "
     await bot.change_presence(activity=discord.CustomActivity(text),status=discord.Status.online)
 
-@bot.command()
+@bot.hybrid_command()
 async def intercom(ctx:commands.Context,*message):
     if not await check_access(ctx,2): return
     await ctx.send(content="**[ACCESS GRANTED]:** Begining transmission.",delete_after=30.0)
@@ -100,9 +110,7 @@ async def test(ctx:commands.Context):
         await ctx.send(f"the bot is in server: {ctx.guild}")
 
 @bot.command()
-async def stop_living(ctx):
-    ctx.send("Going off to retire (call me when needed)!")
-    
+async def stop_living(ctx):    
     await bot.close()
 
 @bot.command()
