@@ -81,7 +81,7 @@ async def intercom(interaction:discord.Interaction):
         return
     
     await interaction.response.send_modal(IntercomForm)
-
+    
 @bot.command()
 async def get_categories(ctx:commands.Context):
     i = 0
