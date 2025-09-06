@@ -46,7 +46,7 @@ async def on_ready():
     integrations = await current_guild.integrations()
     
     for integration in integrations:
-        print(integration.type == discord.BotIntegration.type)
+        print(integration.name + ", " + integration.account.id)
 
 
 @bot.command()
