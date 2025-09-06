@@ -75,8 +75,7 @@ async def set_status(interaction:discord.Interaction, status:str):
     await bot.change_presence(activity=discord.CustomActivity(status),status=discord.Status.online)
 
 @bot.tree.command(name="intercom",description="Broadcast a message over the intercom.")
-#@app_commands.describe(message="Write the message that should be broadcasted.")
-async def intercom(interaction:discord.Interaction,message:str):
+async def intercom(interaction:discord.Interaction):
     if not await check_access(interaction.user.id,2):
         await interaction.response.send_message(content=T_ACCES_DENIED,ephemeral=True)
         return
